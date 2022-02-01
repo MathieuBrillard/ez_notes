@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ez_notes/main.dart';
-import 'package:ez_notes/delayed_animation.dart';
-import 'package:ez_notes/login_page.dart';
+import 'package:ez_notes/main.dart.txt';
+import 'package:ez_notes/shared/delayed_animation.dart.txt';
+import 'package:ez_notes/screens/login_page.dart';
 
 // ignore: use_key_in_widget_constructors
 class SocialPage extends StatelessWidget {

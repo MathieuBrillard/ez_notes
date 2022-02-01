@@ -1,41 +1,28 @@
+import 'package:ez_notes/screens/wrapper.dart';
+import 'package:ez_notes/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ez_notes/welcome_page.dart';
+import 'package:provider/provider.dart';
 
-const colorTheme = Color(0xFFf53152);
-const bgColorTheme = Color(0xFF212021);
+//TODO: Create an AppbarBuilder (in shared/ folder)
+//TODO: Add delayed animation (rebuild the whole design)
 
 void main() {
-  runApp(const MyApp());
+  InstFirebase.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EZ Notes',
-      debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+    return StreamProvider.value(
+      value: AuthService().boolSignInState,
+      initialData: false,
+      child: MaterialApp(
+        title: 'EZ Notes',
+        debugShowCheckedModeBanner: false,
+        home: Wrapper(),
+      ),
     );
   }
 }
-
-/* 
-Scaffold(
-      appBar: AppBar(
-        title: const Text('EZ Notes', textAlign: TextAlign.center),
-        backgroundColor: colorTheme,
-      ),
-      backgroundColor: bgColorTheme,
-      body: const Center(
-        child: DelayedAnimation(
-          delay: 1000,
-          child: FlutterLogo(
-            size: 200,
-          ),
-        ),
-      ),
-    );
-*/

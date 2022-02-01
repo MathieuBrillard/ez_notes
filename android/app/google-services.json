@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "804750076269",
+    "firebase_url": "https://ez-notes-41e7f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ez-notes-41e7f",
+    "storage_bucket": "ez-notes-41e7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804750076269:android:3fa6365908e82ec1945264",
+        "android_client_info": {
+          "package_name": "com.brillarm.ez_notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804750076269-143fpg0r7sp03d7ju0c7kea2k831ke1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8h26yRB9rMvE92dOOm6uptoL5fJckbdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804750076269-143fpg0r7sp03d7ju0c7kea2k831ke1g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

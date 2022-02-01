@@ -1,0 +1,45 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ez_notes/services/firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:ez_notes/screens/home/welcome_page.dart.txt';
+
+const colorTheme = Color(0xFFf53152);
+const bgColorTheme = Color(0xFF212021);
+
+// FirebaseAuth auth = FirebaseAuth.instance;
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'EZ Notes',
+      debugShowCheckedModeBanner: false,
+      home: WelcomePage(),
+    );
+  }
+}
+
+/* 
+Scaffold(
+      appBar: AppBar(
+        title: const Text('EZ Notes', textAlign: TextAlign.center),
+        backgroundColor: colorTheme,
+      ),
+      backgroundColor: bgColorTheme,
+      body: const Center(
+        child: DelayedAnimation(
+          delay: 1000,
+          child: FlutterLogo(
+            size: 200,
+          ),
+        ),
+      ),
+    );
+*/

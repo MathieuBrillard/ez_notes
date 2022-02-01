@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ez_notes/main.dart';
-import 'package:ez_notes/delayed_animation.dart';
-import 'package:ez_notes/social_page.dart';
+import 'package:ez_notes/main.dart.txt';
+import 'package:ez_notes/shared/delayed_animation.dart.txt';
+import 'package:ez_notes/screens/social_page.dart.txt';
 
 // ignore: use_key_in_widget_constructors
 class WelcomePage extends StatelessWidget {
