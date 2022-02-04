@@ -28,6 +28,11 @@ class AuthService {
     return _auth.signInState;
   }
 
+  // get user id
+  String get userId {
+    return _auth.userId;
+  }
+
   // sign-in anonymously
   Future signInAnon() async {
     try {

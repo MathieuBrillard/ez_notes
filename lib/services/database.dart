@@ -1,3 +1,4 @@
+import 'package:ez_notes/models/user.dart';
 import 'package:firedart/firedart.dart';
 import 'package:ez_notes/models/brew.dart';
 
@@ -10,10 +11,10 @@ class DatabaseService {
       Firestore.instance.collection('brews');
 
   //TODO: update les collections pour les notes, catégories, reminders, settings, etc
-  Future updateUserData(String sugars, String name, int strength) async {
+  Future updateUserData(String name, String sugars, int strength) async {
     return await brewCollection.document(uid).set({
-      'sugars': sugars,
       'name': name,
+      'sugars': sugars,
       'strength': strength,
     });
   }
@@ -39,8 +40,23 @@ class DatabaseService {
     }).toList();
   }
 
+  // userData from document
+  UserData _userDataFromDocument(Document? doc) {
+    return UserData(
+      uid: uid,
+      name: doc?['name'],
+      sugars: doc?['sugars'],
+      strength: doc?['strength'],
+    );
+  }
+
   // get brews stream
   Stream<List<Brew>> get brews {
     return brewCollection.stream.map(_brewListFromDocumentList);
+  }
+
+  // get user doc stream
+  Stream<UserData> get userData {
+    return brewCollection.document(uid).stream.map(_userDataFromDocument);
   }
 }
