@@ -21,17 +21,6 @@ class DatabaseService {
 
   // get brew list form document list
   List<Brew> _brewListFromDocumentList(List<Document> documents) {
-    // List<Brew> toReturn = [];
-    // for (var row in documents) {
-    //   toReturn += [
-    //     Brew(
-    //         name: row['name'] ?? '',
-    //         sugars: row['sugars'] ?? '0',
-    //         strength: row['strength'] ?? 0)
-    //   ];
-    // }
-    // return toReturn;
-
     return documents.map((doc) {
       return Brew(
           name: doc['name'] ?? '',

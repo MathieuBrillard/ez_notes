@@ -2,16 +2,16 @@ import 'package:ez_notes/models/user.dart';
 import 'package:ez_notes/services/database.dart';
 import 'package:firedart/auth/user_gateway.dart';
 import 'package:firedart/firedart.dart';
-import 'package:ez_notes/services/firebase_options.dart';
+import 'package:ez_notes/services/database_options.dart';
 
 class InstFirebase {
   // instanciate firebase
   static init() {
     FirebaseAuth.initialize(
-      DefaultFirebaseOptions.web.apiKey,
+      DbOptions.apiKey,
       VolatileStore(),
     );
-    Firestore.initialize(DefaultFirebaseOptions.web.projectId);
+    Firestore.initialize(DbOptions.projectId);
   }
 }
 
