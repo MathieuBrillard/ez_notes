@@ -1,5 +1,5 @@
 import 'package:ez_notes/models/brew.dart';
-import 'package:ez_notes/screens/home/brew_tile.dart';
+import 'package:ez_notes/screens/home/brew_tile.dart.txt';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -10,12 +10,7 @@ class CustomUser {
 class UserData {
   final String uid;
   final String name;
-  final String sugars;
-  final int strength;
+  final String email;
 
-  UserData(
-      {required this.uid,
-      required this.name,
-      required this.sugars,
-      required this.strength});
+  UserData({required this.uid, required this.name, required this.email});
 }

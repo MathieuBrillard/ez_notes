@@ -1,3 +1,4 @@
+import 'package:ez_notes/models/note.dart';
 import 'package:ez_notes/models/user.dart';
 import 'package:ez_notes/services/database.dart';
 import 'package:firedart/auth/user_gateway.dart';
@@ -61,8 +62,7 @@ class AuthService {
       User? result = await _auth.signUp(email, password);
 
       // create a new document for the user with the uid
-      await DatabaseService(uid: result.id)
-          .updateUserData('0', 'Entrez un nouveau nom', 100);
+      await DatabaseService(result.id).createUserData('Nouveau nom', email);
 
       // return the user object
       return _userFromFirebaseUser(result);
