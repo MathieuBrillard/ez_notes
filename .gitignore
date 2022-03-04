@@ -33,6 +33,8 @@
 
 # Firebase related
 firebase-tools-instant-win.exe
+# Api Key
+services/database_options.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
