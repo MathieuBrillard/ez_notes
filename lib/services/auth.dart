@@ -1,4 +1,3 @@
-import 'package:ez_notes/models/note.dart';
 import 'package:ez_notes/models/user.dart';
 import 'package:ez_notes/services/database.dart';
 import 'package:firedart/auth/user_gateway.dart';
