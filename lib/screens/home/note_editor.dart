@@ -1,11 +1,12 @@
-import 'package:ez_notes/screens/home/reminder_settings.dart';
 import 'package:ez_notes/services/auth.dart';
 import 'package:ez_notes/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ez_notes/models/note.dart';
 import 'package:ez_notes/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_editable_textinput/format_markdown.dart';
+import 'package:markdown_editable_textinput/markdown_text_input.dart';
 import 'dart:io' show Platform;
 
 class NoteEditor extends StatefulWidget {
@@ -25,31 +26,12 @@ class _NoteEditorState extends State<NoteEditor> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _controller = TextEditingController();
+
+  bool showEditor = false;
+
   @override
   Widget build(BuildContext context) {
-    void _showReminderPanel() {
-      if (note.reminder == null) {
-        DatabaseService(_auth.userId)
-            .createReminder(note, 'Sans titre', '', '');
-      }
-      showModalBottomSheet(
-        context: context,
-        backgroundColor: bgColorTheme,
-        builder: (context) {
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ReminderSettings(note),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -65,28 +47,6 @@ class _NoteEditorState extends State<NoteEditor> {
           },
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.add_alarm_rounded,
-              color: bgColorTheme,
-            ),
-            onPressed: () {
-              // if (Platform.isWindows) {
-              //   print("windows platform");
-              //   ElegantNotification(
-              //     icon: Icon(Icons.access_alarm_rounded),
-              //     title: Text("Rappel"),
-              //     description: Text("Vous devez aller chez le médecin !"),
-              //     notificationPosition: NOTIFICATION_POSITION.bottom,
-              //     displayCloseButton: true,
-              //     toastDuration: Duration(seconds: 7),
-              //   ).show(context);
-              // } else if (Platform.isAndroid) {
-              //   print("android platform");
-              // }
-              _showReminderPanel();
-            },
-          ),
           IconButton(
             icon: Icon(
               Icons.save,
@@ -125,22 +85,83 @@ class _NoteEditorState extends State<NoteEditor> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  child: TextFormField(
-                    initialValue: note.content,
-                    cursorColor: colorTheme,
-                    decoration: textInputDecoration,
-                    style: GoogleFonts.outfit(color: Colors.white),
-                    maxLines: 5000,
-                    minLines: 5,
-                    validator: null,
-                    onChanged: (val) => note.content = val,
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: MarkdownBody(
+                    data: note.content,
+                    styleSheet: mdStyleSheet,
+                    listItemCrossAxisAlignment:
+                        MarkdownListItemCrossAxisAlignment.baseline,
+                    shrinkWrap: true,
+                    fitContent: false,
+                    softLineBreak: true,
+                    selectable: true,
                   ),
-                )
+                ),
+                SizedBox(height: 20),
+                Visibility(
+                  visible: (showEditor) ? true : false,
+                  maintainState: true,
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    var parentMaxWidth = constraints.maxWidth;
+                    return Container(
+                      width: ((parentMaxWidth * 0.3) > 200)
+                          ? parentMaxWidth * 0.3
+                          : parentMaxWidth,
+                      child: Column(
+                        children: [
+                          MarkdownTextInput(
+                            (String value) => setState(() {
+                              note.content = value;
+                            }),
+                            note.content,
+                            label: 'Editeur de la note',
+                            maxLines: 10,
+                            actions: [
+                              MarkdownType.bold,
+                              MarkdownType.italic,
+                              MarkdownType.title,
+                              MarkdownType.list,
+                              MarkdownType.link,
+                              MarkdownType.separator,
+                              MarkdownType.code,
+                              MarkdownType.blockquote,
+                            ],
+                            controller: _controller,
+                            validators: (value) {
+                              note.content = value ?? '';
+                            },
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(primary: colorTheme),
+                            onPressed: () {
+                              _controller.clear();
+                              note.content = '';
+                            },
+                            child: Text('Clear'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
               ],
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            showEditor = !showEditor;
+          });
+        },
+        child: Icon(
+          (showEditor) ? Icons.edit_off_rounded : Icons.edit_rounded,
+          color: bgColorTheme,
+          size: 40,
+        ),
+        backgroundColor: colorTheme,
       ),
     );
   }

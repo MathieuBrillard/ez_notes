@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // app colors
 const colorTheme = Color(0xFFf53152);
 const bgColorTheme = Color(0xFF212021);
+const bgColorTheme2 = Color.fromARGB(76, 255, 255, 255);
 
 // notes colors
 // const noteColors = {
@@ -57,4 +59,73 @@ TextStyle confirmButtonTextStyle = GoogleFonts.outfit(
 TextStyle errorStyle = GoogleFonts.outfit(
   color: Colors.red,
   fontSize: 14.0,
+);
+
+MarkdownStyleSheet mdStyleSheet = MarkdownStyleSheet(
+  a: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  p: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  code: GoogleFonts.outfit(
+    color: Colors.black,
+  ),
+  h1: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  h2: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  h3: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  h4: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  h5: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  h6: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  em: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  strong: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  del: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  blockquote: GoogleFonts.outfit(
+    color: Colors.black,
+  ),
+  checkbox: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  listBullet: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  // listBulletPadding: EdgeInsets.only(left: 500),
+  tableHead: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  tableBody: GoogleFonts.outfit(
+    color: Colors.white,
+  ),
+  tableBorder: TableBorder.all(color: Colors.white),
+  // tableColumnWidth: FixedColumnWidth(30),
+  textAlign: WrapAlignment.start,
+  h1Align: WrapAlignment.start,
+  h2Align: WrapAlignment.start,
+  h3Align: WrapAlignment.start,
+  h4Align: WrapAlignment.start,
+  h5Align: WrapAlignment.start,
+  h6Align: WrapAlignment.start,
+  unorderedListAlign: WrapAlignment.start,
+  orderedListAlign: WrapAlignment.start,
+  blockquoteAlign: WrapAlignment.start,
+  codeblockAlign: WrapAlignment.start,
+  textScaleFactor: 1.25,
 );

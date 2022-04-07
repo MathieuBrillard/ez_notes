@@ -20,10 +20,10 @@ class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
     final notes = Provider.of<List<Note>>(context);
-    final reminders = Provider.of<List<Reminder>>(context);
+    // final reminders = Provider.of<List<Reminder>>(context);
+    //TODO: List catégories ?
 
-    DatabaseService(_auth.userId).assignReminders(reminders, notes);
-    //TODO: return the loading string if the notes stream is empty or in error
+    // DatabaseService(_auth.userId).assignReminders(reminders, notes);
     return (notes == [])
         ? Loading()
         : ListView.builder(
@@ -70,6 +70,7 @@ class _NoteListState extends State<NoteList> {
                           Home.of(context)?.selectedItems = slctItems;
                         }
                       },
+                      tileColor: bgColorTheme2,
                       leading: CircleAvatar(
                         radius: 25.0,
                         backgroundColor: bgColorTheme, // note color
@@ -77,16 +78,17 @@ class _NoteListState extends State<NoteList> {
                       title: Text(notes[index].title),
                       subtitle: Text((() {
                         if (notes[index].content.isEmpty) {
-                          return "...";
+                          return "";
                         }
                         String subtitre = (notes[index].content.length < 20)
                             ? notes[index].content
                             : notes[index].content.substring(0, 20) + "...";
                         return subtitre;
                       })()),
-                      trailing: (notes[index].reminder != null)
-                          ? Icon(Icons.alarm, color: bgColorTheme)
-                          : null,
+                      // TODO: favorites mark ?
+                      // trailing: (notes[index].reminder != null)
+                      //     ? Icon(Icons.alarm, color: bgColorTheme)
+                      //     : null,
                     ),
                   ),
                 ),

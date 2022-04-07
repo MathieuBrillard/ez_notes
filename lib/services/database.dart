@@ -10,7 +10,7 @@ class DatabaseService {
   final CollectionReference noteCollection =
       Firestore.instance.collection('userData'); // collection name in firebase
 
-  //TODO: update les collections pour les notes, catégories, reminders, settings, etc
+  //TODO: update les collections pour les couleurs
 
   // create user document
   Future createUserData(String name, String email) async {
@@ -58,18 +58,18 @@ class DatabaseService {
       'content': note.content,
       'color': note.noteColor,
     });
-    if (note.reminder != null) {
-      await noteCollection
-          .document(uid)
-          .collection('reminders')
-          .document(note.reminder!.id)
-          .update({
-        'id': note.reminder!.id,
-        'title': note.reminder!.title,
-        'content': note.reminder?.content ?? '',
-        'dueDate': note.reminder!.dueDate,
-      });
-    }
+    // if (note.reminder != null) {
+    //   await noteCollection
+    //       .document(uid)
+    //       .collection('reminders')
+    //       .document(note.reminder!.id)
+    //       .update({
+    //     'id': note.reminder!.id,
+    //     'title': note.reminder!.title,
+    //     'content': note.reminder?.content ?? '',
+    //     'dueDate': note.reminder!.dueDate,
+    //   });
+    // }
   }
 
   // delete note
@@ -82,43 +82,43 @@ class DatabaseService {
   }
 
   // create reminder
-  Future createReminder(
-    Note note,
-    String title,
-    String content,
-    String dueDate,
-  ) async {
-    Document newReminder =
-        await noteCollection.document(uid).collection('reminders').add({
-      'id': '',
-      'noteId': note.id,
-      'title': title,
-      'content': content,
-      'dueDate': dueDate,
-    });
-    await noteCollection
-        .document(uid)
-        .collection('reminders')
-        .document(newReminder.id)
-        .update({'id': newReminder.id});
-    note.reminder = Reminder(
-      id: newReminder.id,
-      noteId: note.id,
-      title: title,
-      content: content,
-      dueDate: dueDate,
-    );
-  }
+  // Future createReminder(
+  //   Note note,
+  //   String title,
+  //   String content,
+  //   String dueDate,
+  // ) async {
+  //   Document newReminder =
+  //       await noteCollection.document(uid).collection('reminders').add({
+  //     'id': '',
+  //     'noteId': note.id,
+  //     'title': title,
+  //     'content': content,
+  //     'dueDate': dueDate,
+  //   });
+  //   await noteCollection
+  //       .document(uid)
+  //       .collection('reminders')
+  //       .document(newReminder.id)
+  //       .update({'id': newReminder.id});
+  //   note.reminder = Reminder(
+  //     id: newReminder.id,
+  //     noteId: note.id,
+  //     title: title,
+  //     content: content,
+  //     dueDate: dueDate,
+  //   );
+  // }
 
   // delete reminder
-  Future deleteReminder(Note note) async {
-    await noteCollection
-        .document(uid)
-        .collection('reminder')
-        .document(note.reminder!.id)
-        .delete();
-    note.reminder = null;
-  }
+  // Future deleteReminder(Note note) async {
+  //   await noteCollection
+  //       .document(uid)
+  //       .collection('reminder')
+  //       .document(note.reminder!.id)
+  //       .delete();
+  //   note.reminder = null;
+  // }
 
   // get note list from document list
   List<Note> _listNoteFromDocumentList(List<Document> documents) {
@@ -132,27 +132,27 @@ class DatabaseService {
   }
 
   // get reminder list from document list
-  List<Reminder> _listReminderFromDocumentList(List<Document> documents) {
-    return documents.map((doc) {
-      return Reminder(
-          id: doc['id'] ?? '0',
-          noteId: doc['noteId'] ?? '0',
-          title: doc['title'] ?? 'Sans titre',
-          content: doc['content'] ?? '',
-          dueDate: doc['dueDate'] ?? '');
-    }).toList();
-  }
+  // List<Reminder> _listReminderFromDocumentList(List<Document> documents) {
+  //   return documents.map((doc) {
+  //     return Reminder(
+  //         id: doc['id'] ?? '0',
+  //         noteId: doc['noteId'] ?? '0',
+  //         title: doc['title'] ?? 'Sans titre',
+  //         content: doc['content'] ?? '',
+  //         dueDate: doc['dueDate'] ?? '');
+  //   }).toList();
+  // }
 
   // assign reminders to notes
-  void assignReminders(List<Reminder> reminders, List<Note> notes) {
-    for (Reminder reminder in reminders) {
-      for (Note note in notes) {
-        if (reminder.noteId == note.id) {
-          note.reminder = reminder;
-        }
-      }
-    }
-  }
+  // void assignReminders(List<Reminder> reminders, List<Note> notes) {
+  //   for (Reminder reminder in reminders) {
+  //     for (Note note in notes) {
+  //       if (reminder.noteId == note.id) {
+  //         note.reminder = reminder;
+  //       }
+  //     }
+  //   }
+  // }
 
   // userData from document
   UserData _userDataFromDocument(Document? doc) {
@@ -169,13 +169,13 @@ class DatabaseService {
   }
 
   // get reminders stream
-  Stream<List<Reminder>> get reminders {
-    return noteCollection
-        .document(uid)
-        .collection('reminders')
-        .stream
-        .map(_listReminderFromDocumentList);
-  }
+  // Stream<List<Reminder>> get reminders {
+  //   return noteCollection
+  //       .document(uid)
+  //       .collection('reminders')
+  //       .stream
+  //       .map(_listReminderFromDocumentList);
+  // }
 
   // get user doc stream
   Stream<UserData> get userData {

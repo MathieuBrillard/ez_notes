@@ -4,6 +4,7 @@ import 'package:ez_notes/shared/delayed_animation.dart';
 import 'package:ez_notes/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ez_notes/services/user_secure_storage.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -26,9 +27,30 @@ class _SignInState extends State<SignIn> {
   IconData _iconPwd = Icons.visibility_off_outlined;
 
   // text field state
-  String email = '';
-  String password = '';
   String error = '';
+
+  // credentials save
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  late bool saveEmail = false;
+  late bool savePwd = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    init();
+  }
+
+  Future init() async {
+    _email.text = await UserSecureStorage.getUsername() ?? '';
+    _password.text = await UserSecureStorage.getPassword() ?? '';
+
+    setState(() {
+      saveEmail = (_email.text != '') ? true : false;
+      savePwd = (_password.text != '') ? true : false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,18 +96,14 @@ class _SignInState extends State<SignIn> {
                           child: SizedBox(
                             width: 500,
                             child: TextFormField(
+                              autofocus: true,
+                              controller: _email,
                               style: GoogleFonts.outfit(color: Colors.white),
                               cursorColor: colorTheme,
-                              // TODO: Icons on form fields ?
                               decoration: textInputDecoration.copyWith(
                                   labelText: 'Votre Email'),
                               validator: (value) =>
                                   value!.isEmpty ? 'Spécifiez un email' : null,
-                              onChanged: (value) {
-                                setState(() {
-                                  email = value;
-                                });
-                              },
                             ),
                           ),
                         ),
@@ -96,6 +114,7 @@ class _SignInState extends State<SignIn> {
                             width: 500,
                             child: TextFormField(
                               obscureText: _obscureText,
+                              controller: _password,
                               cursorColor: colorTheme,
                               style: GoogleFonts.outfit(color: Colors.white),
                               decoration: textInputDecoration.copyWith(
@@ -119,15 +138,48 @@ class _SignInState extends State<SignIn> {
                               validator: (value) => value!.length < 8
                                   ? 'Entrez un mot de passe de plus de 8 caratères'
                                   : null,
-                              onChanged: (value) {
-                                setState(() {
-                                  password = value;
-                                });
-                              },
                             ),
                           ),
                         ),
-                        SizedBox(height: 200.0),
+                        SizedBox(height: 20),
+                        Container(
+                          width: 500,
+                          child: CheckboxListTile(
+                            title: Text(
+                              'Se souvenir de mon email',
+                              style: GoogleFonts.outfit(color: Colors.white),
+                            ),
+                            tileColor: bgColorTheme,
+                            checkColor: colorTheme,
+                            activeColor: bgColorTheme,
+                            value: saveEmail,
+                            onChanged: (value) {
+                              setState(() {
+                                saveEmail = !saveEmail;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          width: 500,
+                          child: CheckboxListTile(
+                            title: Text(
+                              'Se souvenir de mon mot de passe',
+                              style: GoogleFonts.outfit(color: Colors.white),
+                            ),
+                            tileColor: bgColorTheme,
+                            checkColor: colorTheme,
+                            activeColor: bgColorTheme,
+                            value: savePwd,
+                            onChanged: (value) {
+                              setState(() {
+                                savePwd = !savePwd;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20),
                         DelayedAnimation(
                           delay: 2000,
                           child: ElevatedButton(
@@ -140,13 +192,26 @@ class _SignInState extends State<SignIn> {
                                 //TODO: handle errors correctly (https://stackoverflow.com/questions/56113778/how-to-handle-firebase-auth-exceptions-on-flutter)
                                 dynamic result =
                                     await _auth.signInWithEmailAndPassword(
-                                        email, password);
+                                        _email.text, _password.text);
                                 if (result == null) {
                                   setState(() {
                                     loading = false;
                                     error =
                                         'Impossible de se connecter avec ces identifiants.';
                                   });
+                                } else {
+                                  if (saveEmail) {
+                                    await UserSecureStorage.setUsername(
+                                        _email.text);
+                                  } else {
+                                    await UserSecureStorage.deleteUsername();
+                                  }
+                                  if (savePwd) {
+                                    await UserSecureStorage.setPassword(
+                                        _password.text);
+                                  } else {
+                                    await UserSecureStorage.deletePassword();
+                                  }
                                 }
                               }
                             },

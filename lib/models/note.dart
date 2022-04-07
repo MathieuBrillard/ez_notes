@@ -3,7 +3,6 @@ class Note {
   String title;
   String content;
   String noteColor;
-  Reminder? reminder;
 
   Note({
     required this.id,
@@ -13,18 +12,18 @@ class Note {
   });
 }
 
-class Reminder {
-  String id;
-  String noteId;
-  String title;
-  String content;
-  String dueDate;
+// class Reminder {
+//   String id;
+//   String noteId;
+//   String title;
+//   String content;
+//   String dueDate;
 
-  Reminder({
-    required this.id,
-    required this.noteId,
-    required this.title,
-    this.content = "",
-    required this.dueDate,
-  });
-}
+//   Reminder({
+//     required this.id,
+//     required this.noteId,
+//     required this.title,
+//     this.content = "",
+//     required this.dueDate,
+//   });
+// }

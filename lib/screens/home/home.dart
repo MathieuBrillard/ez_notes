@@ -62,13 +62,13 @@ class _HomeState extends State<Home> {
             return _.read();
           },
         ),
-        StreamProvider<List<Reminder>>.value(
-          value: DatabaseService(_auth.userId).reminders,
-          initialData: [],
-          catchError: (_, context) {
-            return _.read();
-          },
-        )
+        // StreamProvider<List<Reminder>>.value(
+        //   value: DatabaseService(_auth.userId).reminders,
+        //   initialData: [],
+        //   catchError: (_, context) {
+        //     return _.read();
+        //   },
+        // )
       ],
       child: Scaffold(
         backgroundColor: bgColorTheme,

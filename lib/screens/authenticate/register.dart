@@ -75,6 +75,7 @@ class _RegisterState extends State<Register> {
                           child: SizedBox(
                             width: 500,
                             child: TextFormField(
+                              autofocus: true,
                               style: GoogleFonts.outfit(color: Colors.white),
                               cursorColor: colorTheme,
                               decoration: textInputDecoration.copyWith(
