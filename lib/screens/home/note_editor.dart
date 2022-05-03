@@ -6,7 +6,7 @@ import 'package:ez_notes/services/database.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown_editable_textinput/format_markdown.dart';
-import 'package:markdown_editable_textinput/markdown_text_input.dart';
+import 'package:ez_notes/services/markdown_text_input.dart';
 import 'dart:io' show Platform;
 
 class NoteEditor extends StatefulWidget {
